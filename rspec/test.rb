@@ -5,19 +5,22 @@ module RSpec
   class Test
     include Matchers
 
-    def initialize(&)
-      @assertions = []
-      instance_eval(&)
+    def initialize(name: nil, hooks:, &block)
+      @name = name
+      @block = block
+      @hooks = hooks
     end
 
     def expect(value)
-      assert = Assert.new(value)
-      @assertions << assert
-      assert
+      Assert.new(value)
     end
 
     def call
-      @assertions.each(&:call)
+      puts "it #{@name}" if @name
+
+      @hooks[:before].each(&:call)
+      instance_eval(&@block)
+      @hooks[:after].each(&:call)
     end
   end
 end

@@ -5,15 +5,11 @@ module RSpec
     end
 
     def to(matcher)
-      @result = matcher.call(@value)
+      matcher.call(@value)
     end
 
     def to_not(matcher)
-      @result = !matcher.call(@value)
-    end
-
-    def call
-      throw "error" unless @result
+      !matcher.call(@value)
     end
 
     alias not_to to_not

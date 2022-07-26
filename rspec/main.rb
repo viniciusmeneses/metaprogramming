@@ -1,8 +1,8 @@
 require_relative "context"
 
 module RSpec
-  def self.describe(_sut, &)
-    Context.new(&).call
+  def self.describe(name, &)
+    Context.new(name:, &).call
   end
 end
 
